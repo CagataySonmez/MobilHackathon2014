@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/CagataySonmez/MobilHackathon2014/issues"
   },
-  "homepage": "https://github.com/CagataySonmez/MobilHackathon2014"
+  "homepage": "https://github.com/CagataySonmez/MobilHackathon2014",
+  "dependencies": {
+    "express": "^4.10.1",
+    "mysql": "^2.5.3",
+    "promise": "^6.0.1",
+    "sequelize": "^2.0.0-rc2"
+  }
 }
