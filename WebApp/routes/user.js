@@ -23,6 +23,14 @@ router.get('/login', function(request, response){
   });
 });
 
+router.get('/session', function(request, response){
+  if(request.session.userid){
+    response.status(200).end();
+  }else{
+    response.status(401).end();
+  }
+});
+
 router.get('/logout', function(request, response){
   request.session.destroy();
   response.status(200).end();
