@@ -1,5 +1,4 @@
 'use strict';
-var crypto = require('crypto');
 
 module.exports = function(sequelize, DataTypes){
   var User = sequelize.define('User', {
@@ -10,16 +9,12 @@ module.exports = function(sequelize, DataTypes){
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
-      set: function(password){
-        var shasum = crypto.createHash('sha1');
-        shasum.update(password);
-        return shasum.digest('hex');
-      }
+      allowNull: false
     },
     glass: {
       type: DataTypes.UUID,
-      defaultValue: sequelize.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      unique: true
     }
   }, {
     classMethods: {

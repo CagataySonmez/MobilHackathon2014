@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes){
     classMethods: {
       associate: function(models){
         Order.belongsTo(models.User);
-        Order.hasOne(models.Listing);
+        Order.belongsTo(models.Listing);
       }
     }
   });

@@ -2,13 +2,14 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-var bodyParser = require('body-parser');
 var server = require('http').createServer(app);
+var bodyParser = require('body-parser');
 var database = require('./models');
 
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
   secret: 'perseus',
+  resave: true, // resave - forces session to be saved even when unmodified. (default: true)
   saveUninitialized: true
 }));
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'images')));
 
 app.use('/', require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
+app.use('/glass', require('./routes/glass'));
 
 // start sequelize
 database.sequelize.sync({
@@ -29,8 +31,9 @@ database.sequelize.sync({
     return arg === "--force-create";
   })
 }).complete(function(error){
-  if(error) throw error[0];
-  else{
-    server.listen(3100);
+  if(error){
+    console.log(error);
+  }else{
+    server.listen(3000);
   }
 });

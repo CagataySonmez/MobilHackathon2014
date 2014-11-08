@@ -18,8 +18,8 @@ fs.readdirSync(__dirname).filter(function(file){
 Object.keys(Database).forEach(function(model){
   if('associate' in Database[model]){
     Database[model].associate(Database);
-    module.exports[model] = Database[model];
   }
+  module.exports[model] = Database[model];
 });
 
 module.exports.sequelize = sequelize;

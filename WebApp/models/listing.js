@@ -13,6 +13,13 @@ module.exports = function(sequelize, DataTypes){
       type: DataTypes.TEXT,
       allowNull: false
     },
+    image: {
+      type: DataTypes.STRING
+    },
+    qr: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -20,12 +27,6 @@ module.exports = function(sequelize, DataTypes){
     remaining: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
-  }, {
-    classMethods: {
-      associate: function(models){
-        Listing.hasMany(models.Order);
-      }
     }
   });
   return Listing;

@@ -23,6 +23,7 @@
     "express-session": "^1.9.1",
     "mysql": "^2.5.3",
     "promise": "^6.0.1",
+    "qr-image": "^2.0.0",
     "sequelize": "^2.0.0-rc2"
   }
 }
