@@ -16,7 +16,7 @@ router.get('/login', function(request, response){
       request.session.userid = user.id;
       response.json(user);
     }else{
-      response.status(500).json("User not found");
+      response.status(401).json("User not found");
     }
   }, function(error){
     response.status(500).json(error);
