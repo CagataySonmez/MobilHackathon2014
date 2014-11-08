@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'images')));
 app.use('/', require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
 app.use('/glass', require('./routes/glass'));
+app.use('/user', require('./routes/user'));
 
 // start sequelize
 database.sequelize.sync({

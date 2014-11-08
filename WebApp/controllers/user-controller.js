@@ -35,4 +35,25 @@ UserController.prototype.glassToken = function(userId){
   });
 };
 
+UserController.prototype.getUserOrders = function(userId){
+  return this.database.User.find({
+    where: {
+      id: userId
+    },
+    include: [this.database.Order]
+  });
+};
+
+UserController.prototype.findByToken = function(token){
+  return this.database.User.find({
+    where: {
+      glass: token
+    }
+  });
+};
+
+UserController.prototype.orderItem = function(userId, listingId){
+
+};
+
 module.exports = new UserController();

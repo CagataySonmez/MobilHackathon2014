@@ -1,7 +1,8 @@
 'use strict';
 var router = require('express').Router();
 var auth = require('./auth');
-var UserController = require('../controller/user-controller');
+var config = require('../config');
+var UserController = require('../controllers/user-controller');
 var OrderController = require('../controllers/order-controller');
 var QR = require('qr-image');
 
@@ -24,7 +25,8 @@ router.get('/pair', auth.session, function(request, response){
   UserController.glassToken(request.session.userid).then(function(token){
     if(token){
       response.type('png');
-      QR.image(token, { type: 'png' }).pipe(response);
+      var qrText = config.host.ip + ':' + config.host.port + '/glass/auth?token=' + token.glass;
+      QR.image(qrText, { type: 'png' }).pipe(response);
     }else{
       response.status(500);
     }
@@ -34,13 +36,35 @@ router.get('/pair', auth.session, function(request, response){
 });
 
 router.get('/orders', auth.session, function(request, response){
-  OrderController.getOrders().then(function(orders){
+  UserController.getUserOrders(request.session.userid).then(function(orders){
     response.json(orders);
+  }, function(error){
+    response.status(500).json(error);
   });
 });
 
 router.get('/order/:id', auth.session, function(request, response){
   OrderController.getOrder(request.params.id).then(function(order){
     response.json(order);
+  }, function(error){
+    response.status(500).json(error);
   });
 });
+
+router.get('/purchase/:id', auth.session, function(request, response){
+  OrderController.purchaseItem(request.params.id).then(function(order){
+    response.json(order);
+  }, function(error){
+    response.status(500).json(error);
+  });
+});
+
+router.get('/cancel/:id', auth.session, function(request, response){
+  OrderController.cancelOrder(request.params.id).then(function(order){
+    response.json(order);
+  }, function(error){
+    response.status(500).json(error);
+  });
+});
+
+module.exports = router;

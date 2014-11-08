@@ -23,7 +23,7 @@ module.exports = {
   },
 
   admin: function(request, response, next){
-    if(request.query.pass = config.admin.pass){
+    if(request.query.pass === config.admin.pass){
       return next();
     }
     response.status(401).json('Authentication').end();
