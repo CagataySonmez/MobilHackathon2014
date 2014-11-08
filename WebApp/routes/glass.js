@@ -26,7 +26,7 @@ router.get('/test', function(request, response){
   });
 });
 
-router.get('/listing/:id', auth.glass, function(request, response){
+router.get('/listing/:id', function(request, response){
   ListingController.getListing(request.params.id).then(function(listing){
     listing.dataValues.imageUrl = listing.getImageUrl();
     listing.dataValues.type = "product";
