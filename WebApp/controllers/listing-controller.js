@@ -13,8 +13,8 @@ ListingController.prototype.create = function(listingData){
   listingData.remaining = listingData.stock;
   return new Promise(function(resolve, reject){
     this.database.Listing.create(listingData).then(function(listing){
-      var filename = listing.getDataValue('id') + '.png';
-      var QRStream = QR.image(config.host.ip + ":" + config.host.port + "/glass/listing/" + listing.getDataValue('id'), {
+      var filename = listing.getDataValue('id') + '.png',
+          QRStream = QR.image(config.host.ip + ":" + config.host.port + "/glass/listing/" + listing.getDataValue('id'), {
         type: 'png'
       });
       QRStream.pipe(fs.createWriteStream('images/qr-' + filename));

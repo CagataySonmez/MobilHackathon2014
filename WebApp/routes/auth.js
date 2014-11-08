@@ -12,14 +12,18 @@ module.exports = {
   },
 
   glass: function(request, response, next){
-    UserController.glassToken(request.session.userid).then(function(token){
-      if(request.query.token === token.glass){
-        return next();
-      }
-      response.status(401).json('Authentication').end();
-    }, function(){
-      response.status(401).json('Authentication').end();
-    });
+    if(request.session){
+      UserController.glassToken(request.session.userid).then(function(token){
+        if(request.query.token === token.glass){
+          return next();
+        }
+        response.status(401).json('Invalid token').end();
+      }, function(){
+        response.status(401).json('Cannot find token').end();
+      });
+    }else{
+      response.status(401).json('Session undefined').end();
+    }
   },
 
   admin: function(request, response, next){

@@ -26,7 +26,7 @@ OrderController.prototype.cancelOrder = function(userId, orderId){
       },
       include: [this.database.User, this.database.Listing]
     }).then(function(order){
-      if(order.User.id === userId){
+      if(order.User.id === userId && order.state === "active"){
         order.state = "cancelled";
         order.Listing.remaining = order.Listing.remaining + 1;
         order.Listing.save().success(function(){
@@ -49,7 +49,7 @@ OrderController.prototype.purchaseOrder = function(userId, orderId){
       },
       include: [this.database.User]
     }).then(function(order){
-      if(order.User.id === userId){
+      if(order.User.id === userId && order.state === "active"){
         order.state = 'purchased';
         order.save().then(resolve);
       }else{

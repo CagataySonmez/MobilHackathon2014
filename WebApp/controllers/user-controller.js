@@ -66,8 +66,12 @@ UserController.prototype.createOrder = function(userId, listingId){
       this.database.Listing.find({
         where: { id: order.ListingId }
       }).then(function(listing){
-        listing.remaining = listing.remaining - 1;
-        listing.save().then(resolve, reject);
+        if(listing.remaining > 0){
+          listing.remaining = listing.remaining - 1;
+          listing.save().then(resolve, reject);
+        }else{
+          reject();
+        }
       }, reject);
     }.bind(this), reject);
   }.bind(this));

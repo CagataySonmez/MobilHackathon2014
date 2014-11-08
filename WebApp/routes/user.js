@@ -12,8 +12,14 @@ router.get('/login', function(request, response){
     username: request.query.username,
     password: request.query.password
   }).then(function(user){
-    request.session.userid = user.id;
-    response.json(user);
+    if(user){
+      request.session.userid = user.id;
+      response.json(user);
+    }else{
+      response.status(500).json("User not found");
+    }
+  }, function(error){
+    response.status(500).json(error);
   });
 });
 
