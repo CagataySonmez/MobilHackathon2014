@@ -1,0 +1,19 @@
+{
+  "name": "hackathon14-perseus",
+  "version": "0.0.0",
+  "description": "Android Hackathon '14 - Perseus backend application",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CagataySonmez/MobilHackathon2014"
+  },
+  "author": "anil.uzumcuoglu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CagataySonmez/MobilHackathon2014/issues"
+  },
+  "homepage": "https://github.com/CagataySonmez/MobilHackathon2014"
+}
