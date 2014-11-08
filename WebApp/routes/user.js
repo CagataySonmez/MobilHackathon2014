@@ -1,6 +1,7 @@
 'use strict';
 var router = require('express').Router();
 var auth = require('./auth');
+var Promise = require('promise');
 var config = require('../config');
 var UserController = require('../controllers/user-controller');
 var OrderController = require('../controllers/order-controller');
@@ -52,7 +53,7 @@ router.get('/order/:id', auth.session, function(request, response){
 });
 
 router.get('/purchase/:id', auth.session, function(request, response){
-  OrderController.purchaseItem(request.params.id).then(function(order){
+  OrderController.purchaseOrder(request.session.userid, request.params.id).then(function(order){
     response.json(order);
   }, function(error){
     response.status(500).json(error);
@@ -60,7 +61,7 @@ router.get('/purchase/:id', auth.session, function(request, response){
 });
 
 router.get('/cancel/:id', auth.session, function(request, response){
-  OrderController.cancelOrder(request.params.id).then(function(order){
+  OrderController.cancelOrder(request.session.userid, request.params.id).then(function(order){
     response.json(order);
   }, function(error){
     response.status(500).json(error);

@@ -13,7 +13,7 @@ module.exports = {
 
   glass: function(request, response, next){
     UserController.glassToken(request.session.userid).then(function(token){
-      if(request.query.token === token){
+      if(request.query.token === token.glass){
         return next();
       }
       response.status(401).json('Authentication').end();

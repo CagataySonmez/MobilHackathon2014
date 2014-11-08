@@ -34,7 +34,7 @@ router.get('/listing/:id', auth.glass, function(request, response){
 });
 
 router.get('/order/:id', auth.glass, function(request, response){
-  UserController.orderItem(request.session.userid, request.params.id).then(function(order){
+  UserController.createOrder(request.session.userid, request.params.id).then(function(order){
     response.json(order);
   }, function(error){
     response.status(500).json(error);

@@ -1,5 +1,6 @@
 'use strict';
 
+var Promise = require('promise');
 var crypto = require('crypto');
 
 var hash = function(password){
@@ -52,8 +53,21 @@ UserController.prototype.findByToken = function(token){
   });
 };
 
-UserController.prototype.orderItem = function(userId, listingId){
-
+UserController.prototype.createOrder = function(userId, listingId){
+  return new Promise(function(resolve, reject){
+    this.database.Order.create({
+      UserId: userId,
+      ListingId: listingId,
+      state: 'active'
+    }).then(function(order){
+      this.database.Listing.find({
+        where: { id: order.ListingId }
+      }).then(function(listing){
+        listing.remaining = listing.remaining - 1;
+        listing.save().then(resolve, reject);
+      }, reject);
+    }.bind(this), reject);
+  }.bind(this));
 };
 
 module.exports = new UserController();
