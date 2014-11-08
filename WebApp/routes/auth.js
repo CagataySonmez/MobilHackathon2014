@@ -12,9 +12,9 @@ module.exports = {
   },
 
   glass: function(request, response, next){
-    if(request.session){
+    if(request.session && request.session.userid){
       UserController.glassToken(request.session.userid).then(function(token){
-        if(request.query.token === token.glass){
+        if(token && request.query.token === token.glass){
           return next();
         }
         response.status(401).json('Invalid token').end();
