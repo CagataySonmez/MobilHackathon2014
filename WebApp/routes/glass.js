@@ -8,7 +8,6 @@ var auth = require('./auth');
 router.get('/auth', function(request, response){
   UserController.findByToken(request.query.token).then(function(user){
     if(user){
-      request.session.userid = user.id;
       response.json({
         type: 'auth',
         token: request.query.token
@@ -38,12 +37,14 @@ router.get('/listing/:id', auth.glass, function(request, response){
 });
 
 router.get('/order/:id', auth.glass, function(request, response){
-  UserController.createOrder(request.session.userid, request.params.id).then(function(order){
-    order.dataValues.success = true;
-    order.dataValues.type = "order";
-    response.json(order.dataValues);
-  }, function(error){
-    response.status(500).json(error);
+  UserController.findByToken(request.query.token).then(function(user){
+    UserController.createOrder(user.id, request.params.id).then(function(order){
+      order.dataValues.success = true;
+      order.dataValues.type = "order";
+      response.json(order.dataValues);
+    }, function(error){
+      response.status(500).json(error);
+    });
   });
 });
 

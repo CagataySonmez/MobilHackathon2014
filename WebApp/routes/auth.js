@@ -12,17 +12,17 @@ module.exports = {
   },
 
   glass: function(request, response, next){
-    if(request.session && request.session.userid){
-      UserController.glassToken(request.session.userid).then(function(token){
-        if(token && request.query.token === token.glass){
+    if(request.query.token){
+      UserController.findByToken(request.query.token).then(function(user){
+        if(user){
           return next();
         }
         response.status(401).json('Invalid token').end();
-      }, function(){
-        response.status(401).json('Cannot find token').end();
+      }, function(error){
+        response.status(401).json(error).end();
       });
     }else{
-      response.status(401).json('Session undefined').end();
+      response.status(401).json('No token provided')
     }
   },
 
