@@ -41,7 +41,10 @@ UserController.prototype.getUserOrders = function(userId){
     where: {
       id: userId
     },
-    include: [this.database.Order]
+    include: [{
+      model: this.database.Order,
+      include: [this.database.Listing]
+    }]
   });
 };
 

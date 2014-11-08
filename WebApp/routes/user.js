@@ -38,6 +38,11 @@ router.get('/pair', auth.session, function(request, response){
 
 router.get('/orders', auth.session, function(request, response){
   UserController.getUserOrders(request.session.userid).then(function(orders){
+    orders.Orders = orders.Orders.map(function(order){
+      var listing = order.Listing;
+      listing.dataValues.imageUrl = listing.getImageUrl();
+      return listing.dataValues;
+    });
     response.json(orders);
   }, function(error){
     response.status(500).json(error);

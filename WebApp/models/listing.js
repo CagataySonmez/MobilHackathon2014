@@ -30,6 +30,10 @@ module.exports = function(sequelize, DataTypes){
     remaining: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     instanceMethods: {

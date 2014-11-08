@@ -30,7 +30,6 @@ OrderController.prototype.cancelOrder = function(userId, orderId){
         order.state = "cancelled";
         order.Listing.remaining = order.Listing.remaining + 1;
         order.Listing.save().success(function(){
-          console.log('order is being saved');
           order.save().then(resolve);
         });
       }else{
