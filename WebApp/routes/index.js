@@ -8,10 +8,4 @@ router.get('/', function(request, response){
   });
 });
 
-router.get('/listing/:id', function(request, response){
-  ListingController.getListing(request.params.id).then(function(listing){
-    response.render()
-  });
-});
-
 module.exports = router;

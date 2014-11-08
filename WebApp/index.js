@@ -11,6 +11,8 @@ app.use(function(request, response, next){
   response.header('Access-Control-Allow-Origin', '*');
   response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   response.header('Access-Control-Allow-Headers', 'Content-Type');
+  response.header('Access-Control-Allow-Credentials', 'true');
+
   next();
 });
 
@@ -43,6 +45,9 @@ database.sequelize.sync({
   if(error){
     console.log(error);
   }else{
+    if(process.argv.some(function(arg){ return arg === "--bulk-insert";})){
+      require('./data/bulk-insert').insert();
+    }
     server.listen(config.host.port);
   }
 });

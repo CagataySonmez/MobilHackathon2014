@@ -39,9 +39,9 @@ router.get('/listing/:id', function(request, response){
 router.get('/order/:id', auth.glass, function(request, response){
   UserController.findByToken(request.query.token).then(function(user){
     UserController.createOrder(user.id, request.params.id).then(function(order){
-      order.dataValues.success = true;
-      order.dataValues.type = "order";
-      response.json(order.dataValues);
+      response.json({
+        success: true
+      });
     }, function(error){
       response.status(500).json(error);
     });
