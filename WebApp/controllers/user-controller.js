@@ -17,4 +17,22 @@ UserController.prototype.create = function(user){
   return this.database.User.create(user);
 };
 
+UserController.prototype.login = function(credentials){
+  return this.database.User.find({
+    where: {
+      username: credentials.username,
+      password: hash(credentials.password)
+    }
+  });
+};
+
+UserController.prototype.glassToken = function(userId){
+  return this.database.User.find({
+    where: {
+      id: userId
+    },
+    attributes: ['glass']
+  });
+};
+
 module.exports = new UserController();

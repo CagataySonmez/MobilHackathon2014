@@ -1,4 +1,7 @@
 'use strict';
+
+var config = require('../config');
+
 module.exports = function(sequelize, DataTypes){
   var Listing = sequelize.define('Listing', {
     owner: {
@@ -27,6 +30,15 @@ module.exports = function(sequelize, DataTypes){
     remaining: {
       type: DataTypes.INTEGER,
       allowNull: false
+    }
+  }, {
+    instanceMethods: {
+      getImageUrl: function(){
+        return config.host.ip + ':' + config.host.port + '/' + this.image;
+      },
+      getQRUrl: function(){
+        return config.host.ip + ':' + config.host.port + '/' + this.qr;
+      }
     }
   });
   return Listing;

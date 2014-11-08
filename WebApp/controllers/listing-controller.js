@@ -3,6 +3,7 @@
 var Promise = require('promise');
 var QR = require('qr-image');
 var fs = require('fs');
+var config = require('../config');
 
 var ListingController = function(){
   this.database = require('../models');
@@ -13,7 +14,7 @@ ListingController.prototype.create = function(listingData){
   return new Promise(function(resolve, reject){
     this.database.Listing.create(listingData).then(function(listing){
       var filename = listing.getDataValue('id') + '.png';
-      var QRStream = QR.image("http://192.168.1.157:3000/glass/listing/" + listing.getDataValue('id'), {
+      var QRStream = QR.image(config.host.ip + ":" + config.host.port + "/glass/listing/" + listing.getDataValue('id'), {
         type: 'png'
       });
       QRStream.pipe(fs.createWriteStream('images/qr-' + filename));
@@ -32,7 +33,11 @@ ListingController.prototype.create = function(listingData){
 };
 
 ListingController.prototype.getListing = function(listingId){
-
+  return this.database.Listing.find({
+    where: {
+      id: listingId
+    }
+  });
 };
 
 module.exports = new ListingController();

@@ -5,6 +5,7 @@ var app = express();
 var server = require('http').createServer(app);
 var bodyParser = require('body-parser');
 var database = require('./models');
+var config = require('./config');
 
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
@@ -34,6 +35,6 @@ database.sequelize.sync({
   if(error){
     console.log(error);
   }else{
-    server.listen(3000);
+    server.listen(config.host.port);
   }
 });
