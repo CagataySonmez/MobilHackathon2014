@@ -1,0 +1,621 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    tools:context="edu.hackathon.perseus.app.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/customborder"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnStartStop"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="4"
+            android:onClick="buttonClick" />
+
+        <TextView
+            android:id="@+id/lblElapsedTime"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/menuButton"
+            android:layout_width="0px"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_menu_gray"
+            android:onClick="menuButtonClick" />
+
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llMessageArea"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/abc_action_bar_icon_vertical_padding"
+                android:layout_marginRight="@dimen/abc_action_bar_icon_vertical_padding"
+                android:orientation="vertical" >
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="Download check period"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="30 (sec)"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of Success for Download"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfSuccessDownload"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of failure for Download"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfFailDownload"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Download BW (EU)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastDownloadEu"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Download BW (USA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastDownloadUsa"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Download BW (ASIA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastDownloadAsia"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/abc_action_bar_icon_vertical_padding"
+                android:layout_marginRight="@dimen/abc_action_bar_icon_vertical_padding"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="Upload check period"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="30 (sec)"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of Success for Upload"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfSuccessUpload"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of failure for Upload"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfFailUpload"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Upload BW (EU)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastUploadEu"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Upload BW (USA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastUploadUsa"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Upload BW (ASIA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastUploadAsia"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/abc_action_bar_icon_vertical_padding"
+                android:layout_marginRight="@dimen/abc_action_bar_icon_vertical_padding"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="Ping check period"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="30 (sec)"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of Success for Ping"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfSuccessPing"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:text="#of failure for Ping"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblNumOfFailPing"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Ping Delay (EU)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastPingEu"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Ping Delay (USA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastPingUsa"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:text="Last Ping Delay (ASIA)"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/lblLastPingAsia"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/abc_action_bar_icon_vertical_padding"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+    
+    <LinearLayout
+        android:id="@+id/llMessageArea"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:background="@drawable/customborder" >
+
+        <TextView
+            android:id="@+id/lblMessageBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_below="@id/linearLayout1"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/borderbottom"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Name of the place"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/abc_action_bar_title_text_size" />
+
+        <EditText
+            android:id="@+id/etPlaceName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Starbucks"
+            android:textSize="@dimen/abc_action_bar_title_text_size" >
+
+            <requestFocus />
+        </EditText>
+        
+    </LinearLayout>
+    
+</RelativeLayout>
