@@ -9,7 +9,10 @@ router.get('/auth', function(request, response){
   UserController.findByToken(request.query.token).then(function(user){
     if(user){
       request.session.userid = user.id;
-      response.status(200).end();
+      response.json({
+        type: 'auth',
+        token: request.query.token
+      });
     }else{
       response.status(500).json('Invalid token');
     }
@@ -27,6 +30,7 @@ router.get('/test', function(request, response){
 router.get('/listing/:id', auth.glass, function(request, response){
   ListingController.getListing(request.params.id).then(function(listing){
     listing.dataValues.imageUrl = listing.getImageUrl();
+    listing.dataValues.type = "product";
     response.json(listing.dataValues);
   }, function(error){
     response.status(500).json(error);
@@ -35,7 +39,9 @@ router.get('/listing/:id', auth.glass, function(request, response){
 
 router.get('/order/:id', auth.glass, function(request, response){
   UserController.createOrder(request.session.userid, request.params.id).then(function(order){
-    response.json(order);
+    order.dataValues.success = true;
+    order.dataValues.type = "order";
+    response.json(order.dataValues);
   }, function(error){
     response.status(500).json(error);
   });
