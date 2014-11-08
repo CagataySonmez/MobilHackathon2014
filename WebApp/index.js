@@ -10,7 +10,7 @@ var config = require('./config');
 app.use(function(request, response, next){
   response.header('Access-Control-Allow-Origin', '*');
   response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  response.header('Access-Control-Allow-Headers', 'Content-Type');
+  response.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
   response.header('Access-Control-Allow-Credentials', 'true');
 
   next();
