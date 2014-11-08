@@ -4,6 +4,7 @@ var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
 var server = require('http').createServer(app);
+var database = require('./models');
 
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
@@ -19,5 +20,17 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, 'images')));
 
 app.use('/', require('./routes/index'));
+app.use('/admin', require('./routes/admin'));
 
-server.listen(3000);
+// start sequelize
+database.sequelize.sync({
+  // if force is set, re-creates the database. All rows will be lost!
+  force: process.argv.some(function(arg){
+    return arg === "--force-create";
+  })
+}).complete(function(error){
+  if(error) throw error[0];
+  else{
+    server.listen(3100);
+  }
+});
