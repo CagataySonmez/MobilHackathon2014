@@ -15,6 +15,10 @@ module.exports = function(sequelize, DataTypes){
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       unique: true
+    },
+    session: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     classMethods: {

@@ -56,6 +56,14 @@ UserController.prototype.findByToken = function(token){
   });
 };
 
+UserController.prototype.findById = function(userId){
+  return this.database.User.find({
+    where: {
+      id: userId
+    }
+  });
+};
+
 UserController.prototype.createOrder = function(userId, listingId){
   return new Promise(function(resolve, reject){
     this.database.Order.create({

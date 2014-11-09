@@ -13,9 +13,12 @@ router.get('/login', function(request, response){
     password: request.query.password
   }).then(function(user){
     if(user){
-      response.json({
-        username: user.username,
-        token: user.glass
+      user.session = true;
+      user.save().then(function(){
+        response.json({
+          username: user.username,
+          token: user.glass
+        });
       });
     }else{
       response.status(401).json("User not found");
@@ -26,16 +29,27 @@ router.get('/login', function(request, response){
 });
 
 router.get('/session', function(request, response){
-  if(request.session.userid){
-    response.status(200).end();
-  }else{
-    response.status(401).end();
-  }
+  UserController.findById(1).then(function(user){
+    if(user.session){
+      response.json({
+        username: user.username,
+        token: user.glass
+      });
+    }else{
+      response.status(401).end();
+    }
+  });
 });
 
 router.get('/logout', function(request, response){
-  request.session.destroy();
-  response.status(200).end();
+  UserController.findById(1).then(function(user){
+    if(user.session){
+      user.session = false;
+      user.save().then(function(){
+        response.status(200).end();
+      });
+    }
+  });
 });
 
 router.get('/pair', auth.token, function(request, response){
