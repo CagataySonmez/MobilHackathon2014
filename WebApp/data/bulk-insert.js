@@ -42,10 +42,6 @@ var data = {
       UserId: 1,
       ListingId: 1,
       state: 'active'
-    },{
-      UserId: 1,
-      ListingId: 2,
-      state: 'purchased'
     }
   ]
 };
