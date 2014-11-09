@@ -40,6 +40,7 @@ router.get('/order/:id', auth.token, function(request, response){
   UserController.findByToken(request.query.token).then(function(user){
     UserController.createOrder(user.id, request.params.id).then(function(order){
       response.json({
+        type: "order",
         success: true
       });
     }, function(error){
