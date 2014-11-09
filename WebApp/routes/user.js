@@ -55,7 +55,7 @@ router.get('/logout', function(request, response){
 router.get('/pair', auth.token, function(request, response){
   if(request.query.token){
     response.type('png');
-    var qrText = config.host.ip + ':' + config.host.port + '/glass/auth?token=' + token;
+    var qrText = config.host.ip + ':' + config.host.port + '/glass/auth?token=' + auth.token;
     QR.image(qrText, { type: 'png' }).pipe(response);
   }else{
     response.status(500);
