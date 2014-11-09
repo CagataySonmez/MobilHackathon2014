@@ -1,9 +1,13 @@
 'use strict';
-var UserController = require('../controllers/user-controller');
-var ListingController = require('../controllers/listing-controller');
+
+var controllers = {
+  user: require('../controllers/user-controller'),
+  listing: require('../controllers/listing-controller'),
+  order: require('../controllers/order-controller')
+};
 
 var data = {
-  users: [
+  user: [
     {
       username: 'demo',
       password: 'demo'
@@ -12,7 +16,7 @@ var data = {
       password: 'anil'
     }
   ],
-  listings: [
+  listing: [
     {
       owner: "GittiGidiyor",
       name: "iPhone 6",
@@ -21,10 +25,10 @@ var data = {
       price: 100
     },{
       owner: "HepsiBurada",
-      name: "LG G3",
+      name: "LG G2",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis metus ante, vel elementum velit pretium ut. Sed varius ex.",
       stock: 10,
-      price: 100
+      price: 70
     },{
       owner: "GittiGidiyor",
       name: "LG G3",
@@ -32,17 +36,26 @@ var data = {
       stock: 5,
       price: 90
     }
+  ],
+  order: [
+    {
+      UserId: 1,
+      ListingId: 1,
+      state: 'active'
+    },{
+      UserId: 1,
+      ListingId: 2,
+      state: 'purchased'
+    }
   ]
 };
 
 module.exports = {
   insert: function(){
-    data.users.forEach(function(user){
-      UserController.create(user);
-    });
-
-    data.listings.forEach(function(listing){
-      ListingController.create(listing);
+    Object.keys(data).forEach(function(dataItem){
+      data[dataItem].forEach(function(item){
+        controllers[dataItem].create(item);
+      });
     });
   }
 };

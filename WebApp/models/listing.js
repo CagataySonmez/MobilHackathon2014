@@ -42,6 +42,9 @@ module.exports = function(sequelize, DataTypes){
       },
       getQRUrl: function(){
         return config.host.ip + ':' + config.host.port + '/' + this.qr;
+      },
+      getBillboardUrl: function(){
+        return config.host.ip + ':' + config.host.port + '/billboard-' + this.id + '.jpg';
       }
     }
   });

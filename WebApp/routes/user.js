@@ -48,6 +48,8 @@ router.get('/logout', function(request, response){
       user.save().then(function(){
         response.status(200).end();
       });
+    }else{
+      response.status(500).end();
     }
   });
 });
