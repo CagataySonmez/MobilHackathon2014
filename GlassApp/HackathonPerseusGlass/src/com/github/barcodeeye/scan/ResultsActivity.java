@@ -93,7 +93,7 @@ public class ResultsActivity extends Activity {
 		mContext = this;
 		mGestureDetector = createGestureDetector(this);
 		url = getIntent().getExtras().getString("url");
-		createCards("Veriler Çekiliyor...","Lütfen Bekleyin...",R.drawable.question_mark_thumb);
+		createCards("Veriler Çekiliyor...","Lütfen Bekleyin...",R.drawable.refresh);
 		
 		mEyeGestureManager = EyeGestureManager.from(this);
         for (EyeGesture eg : EyeGesture.values()) {
@@ -174,7 +174,7 @@ public class ResultsActivity extends Activity {
         	if(eyeGesture == EyeGesture.DOUBLE_BLINK){
                 if(id != 0){
                 	timerHandler.removeCallbacks(timerRunnable);
-                	createCards("Ýþleminiz yapýlýyor...","Lütfen Bekleyin...",R.drawable.question_mark_thumb);
+                	createCards("Ýþleminiz yapýlýyor...","Lütfen Bekleyin...",R.drawable.refresh);
                     String addToChartUrl = "http://54.72.214.188:3101/glass/order/"+id+"?token=" + token;
                     id = 0;
         			new HttpAsyncTask().execute(addToChartUrl);
@@ -242,12 +242,12 @@ public class ResultsActivity extends Activity {
 					editor.putString(getString(R.string.pair_result_key), token);
 					editor.commit();
 					canClose = true;
-					createCards("Cihazlarýnýzý baþarýlý olarak eþleþtirdiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.question_mark_thumb);
+					createCards("Cihazlarýnýzý baþarýlý olarak eþleþtirdiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.success);
 				}
 				else if(type.equals("product")){
 					if(token == ""){
 						canClose = true;
-						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.question_mark_thumb);
+						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
 					}
 					else {
 						product = jObject.getString("name");
@@ -255,24 +255,24 @@ public class ResultsActivity extends Activity {
 						price = jObject.getInt("price");
 						stock = jObject.getInt("stock");
 						remaining = jObject.getInt("remaining");
-						createCards(product + ", " + price + " TL\nStokta kalan: " + remaining + "/" + stock, "\nSepete eklemek için çift göz kýrpýn. Kalan zaman",R.drawable.question_mark_thumb);
+						createCards(product + ", " + price + " TL\nStokta kalan: " + remaining + "/" + stock, "\nSepete eklemek için çift göz kýrpýn. Kalan zaman",R.drawable.question);
 					}
 				}
 				else if(type.equals("order")){
 					if(token == ""){
-						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.question_mark_thumb);
+						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
 					}
 					else {
 						boolean success = jObject.getBoolean("success");
 						if(success)
-							createLeftLayoutCards(product + " sepetinize eklendi.","Çýkýþ için çift göz kýrpýn",R.drawable.question_mark_thumb);
+							createLeftLayoutCards(product + " sepetinize eklendi.","Çýkýþ için çift göz kýrpýn",R.drawable.small_tick);
 						else
-							createLeftLayoutCards("Ýþlem baþarýsýz!\n"+product+" sepetinize eklenemedi!","Çýkýþ için çift göz kýrpýn",R.drawable.question_mark_thumb);
+							createLeftLayoutCards("Ýþlem baþarýsýz!\n"+product+" sepetinize eklenemedi!","Çýkýþ için çift göz kýrpýn",R.drawable.small_cross);
 					}
 					canClose = true;
 				}
 				else if(type.equals("server_error")){
-					createCards("Sunucuya eriþilemiyor!\nLütfen Að ayarlarýnýzý kontrol edin.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.question_mark_thumb);
+					createCards("Sunucuya eriþilemiyor!\nLütfen Að ayarlarýnýzý kontrol edin.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
 					canClose = true;
 				}
 				timerHandler.postDelayed(timerRunnable, 1000);
@@ -331,7 +331,7 @@ public class ResultsActivity extends Activity {
  
     }
 
-	private void createCards(boolean _isLeftLayout, boolean isDeepCreate, String _text, String _footnote, int _imageId) {
+	private void createCards(boolean showRemainingTime, boolean _isLeftLayout, boolean isDeepCreate, String _text, String _footnote, int _imageId) {
 		if(isDeepCreate){
 			text = _text;
 			footnote = _footnote;
@@ -345,6 +345,9 @@ public class ResultsActivity extends Activity {
 		card = new Card(this);
 		card.setText(_text);
 		card.setFootnote(_footnote);
+		if(showRemainingTime)
+			card.setTimestamp(Integer.toString(remainingTime));
+		
 		if(_isLeftLayout)
 			card.setImageLayout(Card.ImageLayout.LEFT);
 		else
@@ -360,15 +363,15 @@ public class ResultsActivity extends Activity {
 	}
 	
 	private void createLeftLayoutCards(String _text, String _footnote, int _imageId){
-		createCards(true, true, _text, _footnote, _imageId);
+		createCards(false,true, true, _text, _footnote, _imageId);
 	}
 	
 	private void createCards(String _text, String _footnote, int _imageId){
-		createCards(false, true, _text, _footnote, _imageId);
+		createCards(false,false, true, _text, _footnote, _imageId);
 	}
 	
 	private void updateCards() {
-		createCards(isLeftLayout,false, text, footnote + " " + remainingTime + "...", imageId);
+		createCards(true, isLeftLayout,false, text, footnote, imageId);
 	}
 
     private class ExampleCardScrollAdapter extends CardScrollAdapter {
