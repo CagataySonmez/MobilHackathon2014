@@ -121,10 +121,10 @@ public final class CaptureActivity extends BaseGlassActivity implements
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         
         //always reset token during the development phase!
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.pair_result_key), Context.MODE_PRIVATE);
-		Editor editor = sharedPref.edit();
-		editor.putString(getString(R.string.pair_result_key), "");
-		editor.commit();
+//        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.pair_result_key), Context.MODE_PRIVATE);
+//		Editor editor = sharedPref.edit();
+//		editor.putString(getString(R.string.pair_result_key), "");
+//		editor.commit();
     }
 
     @Override
