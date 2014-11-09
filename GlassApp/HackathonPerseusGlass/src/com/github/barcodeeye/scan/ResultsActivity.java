@@ -275,6 +275,10 @@ public class ResultsActivity extends Activity {
 					createCards("Sunucuya eriþilemiyor!\nLütfen Að ayarlarýnýzý kontrol edin.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
 					canClose = true;
 				}
+				else if(type.equals("server_bad_response")){
+					createCards("404 sayfa bulunamadý!\nSunucu bu isteðe yanýt veremiyor.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
+					canClose = true;
+				}
 				timerHandler.postDelayed(timerRunnable, 1000);
 			} catch (JSONException e) {
 				Log.d(TAG,"Add to chart is failed.");
@@ -310,7 +314,7 @@ public class ResultsActivity extends Activity {
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
-                result = "{\"type\":\"server_error\"}";
+                result = "{\"type\":\"server_bad_response\"}";
  
         } catch (Exception e) {
             result = "{\"type\":\"server_error\"}";
