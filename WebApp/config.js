@@ -2,15 +2,15 @@ module.exports = {
   database: {
     name: 'hackathon-perseus',
     user: 'root',
-    password: 'q'
+    password: ''
   },
 
   host: {
-    ip: '192.168.1.157',
-    port: '3000'
+    ip: 'http://54.72.214.188',
+    port: '3101'
   },
 
   admin: {
-    pass: 'perseus'
+    pass: ''
   }
 };
