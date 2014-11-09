@@ -21,6 +21,8 @@ import java.util.Map;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -40,8 +42,6 @@ import com.github.barcodeeye.migrated.AmbientLightManager;
 import com.github.barcodeeye.migrated.BeepManager;
 import com.github.barcodeeye.migrated.FinishListener;
 import com.github.barcodeeye.migrated.InactivityTimer;
-import com.github.barcodeeye.scan.result.ResultProcessor;
-import com.github.barcodeeye.scan.result.ResultProcessorFactory;
 import com.github.barcodeeye.scan.ui.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -49,6 +49,9 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
+import com.google.zxing.client.result.ParsedResult;
+import com.google.zxing.client.result.ResultParser;
+import com.google.zxing.client.result.URIParsedResult;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -116,6 +119,12 @@ public final class CaptureActivity extends BaseGlassActivity implements
         mViewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        
+        //always reset token during the development phase!
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.pair_result_key), Context.MODE_PRIVATE);
+		Editor editor = sharedPref.edit();
+		editor.putString(getString(R.string.pair_result_key), "");
+		editor.commit();
     }
 
     @Override
@@ -300,11 +309,41 @@ public final class CaptureActivity extends BaseGlassActivity implements
             Log.e(TAG, "Failed to save image!", e);
         }
 
+        /*
         ResultProcessor<?> processor = ResultProcessorFactory
                 .makeResultProcessor(this, rawResult, imageUri);
 
+        
         startActivity(ResultsActivity.newIntent(this,
                 processor.getCardResults()));
+        */
+        
+        ParsedResult parsedResult = ResultParser.parseResult(rawResult);
+
+        switch (parsedResult.getType()) {
+            case URI:
+            	URIParsedResult upr = (URIParsedResult)parsedResult;
+        		Intent intent = new Intent(this, ResultsActivity.class);
+        		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        		intent.putExtra("url", upr.getURI());
+        		startActivity(intent);
+            case TEXT:
+            	Log.w(TAG, "QR text: " + parsedResult.toString());
+            case PRODUCT:
+            case ISBN:
+            case SMS:
+            case GEO:
+            case TEL:
+            case CALENDAR:
+            case ADDRESSBOOK:
+            case EMAIL_ADDRESS:
+            case WIFI:
+                // currently unsupported so we let them fall through
+            default:
+            	Log.w(TAG, "QR Type: " + parsedResult.getType());
+        		break;
+        }
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

@@ -15,8 +15,7 @@
      limitations under the License.
 -->
 
-<trigger command="START_PRESENTING" >
-
+<trigger command="SCAN_A_PRODUCT" >
     <constraints
         camera="true"
         network="true" />
