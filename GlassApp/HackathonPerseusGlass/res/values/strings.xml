@@ -16,7 +16,8 @@
 -->
 <resources>
 
-    <string name="app_name">Barcode Eye</string>
+    <string name="app_name">Koy Sepete</string>
+    <string name="pair_result_key">pair_result_key</string>
     <string name="app_picker_name">Applications</string>
     <string name="bookmark_picker_name">Bookmarks</string>
     <string name="button_add_calendar">Add to calendar</string>
