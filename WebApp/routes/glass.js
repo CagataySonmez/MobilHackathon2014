@@ -36,7 +36,7 @@ router.get('/listing/:id', function(request, response){
   });
 });
 
-router.get('/order/:id', auth.glass, function(request, response){
+router.get('/order/:id', auth.token, function(request, response){
   UserController.findByToken(request.query.token).then(function(user){
     UserController.createOrder(user.id, request.params.id).then(function(order){
       response.json({

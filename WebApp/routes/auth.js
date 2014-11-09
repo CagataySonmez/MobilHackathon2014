@@ -4,14 +4,8 @@ var config = require('../config');
 var UserController = require('../controllers/user-controller');
 
 module.exports = {
-  session: function(request, response, next){
-    if(request.session.userid !== undefined){
-      return next();
-    }
-    response.status(401).json('Authentication').end();
-  },
 
-  glass: function(request, response, next){
+  token: function(request, response, next){
     if(request.query.token){
       UserController.findByToken(request.query.token).then(function(user){
         if(user){
@@ -22,7 +16,7 @@ module.exports = {
         response.status(401).json(error).end();
       });
     }else{
-      response.status(401).json('No token provided')
+      response.status(401).json('No token provided');
     }
   },
 

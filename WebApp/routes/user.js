@@ -13,8 +13,10 @@ router.get('/login', function(request, response){
     password: request.query.password
   }).then(function(user){
     if(user){
-      request.session.userid = user.id;
-      response.json(user);
+      response.json({
+        username: user.username,
+        token: user.glass
+      });
     }else{
       response.status(401).json("User not found");
     }
@@ -36,34 +38,32 @@ router.get('/logout', function(request, response){
   response.status(200).end();
 });
 
-router.get('/pair', auth.session, function(request, response){
-  UserController.glassToken(request.session.userid).then(function(token){
-    if(token){
-      response.type('png');
-      var qrText = config.host.ip + ':' + config.host.port + '/glass/auth?token=' + token.glass;
-      QR.image(qrText, { type: 'png' }).pipe(response);
-    }else{
-      response.status(500);
-    }
-  }, function(error){
-    response.status(500).json(error);
-  });
+router.get('/pair', auth.token, function(request, response){
+  if(request.query.token){
+    response.type('png');
+    var qrText = config.host.ip + ':' + config.host.port + '/glass/auth?token=' + token;
+    QR.image(qrText, { type: 'png' }).pipe(response);
+  }else{
+    response.status(500);
+  }
 });
 
-router.get('/orders', auth.session, function(request, response){
-  UserController.getUserOrders(request.session.userid).then(function(orders){
-    orders.Orders = orders.Orders.map(function(order){
-      var listing = order.Listing;
-      listing.dataValues.imageUrl = listing.getImageUrl();
-      return listing.dataValues;
+router.get('/orders', auth.token, function(request, response){
+  UserController.findByToken(request.query.token).then(function(user){
+    UserController.getUserOrders(user.id).then(function(orders){
+      orders.Orders = orders.Orders.map(function(order){
+        var listing = order.Listing;
+        listing.dataValues.imageUrl = listing.getImageUrl();
+        return listing.dataValues;
+      });
+      response.json(orders);
+    }, function(error){
+      response.status(500).json(error);
     });
-    response.json(orders);
-  }, function(error){
-    response.status(500).json(error);
   });
 });
 
-router.get('/order/:id', auth.session, function(request, response){
+router.get('/order/:id', auth.token, function(request, response){
   OrderController.getOrder(request.params.id).then(function(order){
     response.json(order);
   }, function(error){
@@ -71,19 +71,23 @@ router.get('/order/:id', auth.session, function(request, response){
   });
 });
 
-router.get('/purchase/:id', auth.session, function(request, response){
-  OrderController.purchaseOrder(request.session.userid, request.params.id).then(function(order){
-    response.json(order);
-  }, function(error){
-    response.status(500).json(error);
+router.get('/purchase/:id', auth.token, function(request, response){
+  UserController.findByToken(request.query.token).then(function(user){
+    OrderController.purchaseOrder(user.id, request.params.id).then(function(order){
+      response.json(order);
+    }, function(error){
+      response.status(500).json(error);
+    });
   });
 });
 
-router.get('/cancel/:id', auth.session, function(request, response){
-  OrderController.cancelOrder(request.session.userid, request.params.id).then(function(order){
-    response.json(order);
-  }, function(error){
-    response.status(500).json(error);
+router.get('/cancel/:id', auth.token, function(request, response){
+  UserController.findByToken(request.query.token).then(function(user){
+    OrderController.cancelOrder(user.id, request.params.id).then(function(order){
+      response.json(order);
+    }, function(error){
+      response.status(500).json(error);
+    });
   });
 });
 
