@@ -35,6 +35,18 @@ var data = {
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis metus ante, vel elementum velit pretium ut. Sed varius ex.",
       stock: 5,
       price: 90
+    },{
+      owner: "Trendyol",
+      name: "Northface Yagmurluk",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis metus ante, vel elementum velit pretium ut. Sed varius ex.",
+      stock: 15,
+      price: 50
+    },{
+      owner: "Trendyol",
+      name: "Nike Ayakkabi",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis metus ante, vel elementum velit pretium ut. Sed varius ex.",
+      stock: 50,
+      price: 55
     }
   ],
   order: [
