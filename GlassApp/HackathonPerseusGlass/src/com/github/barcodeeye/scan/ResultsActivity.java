@@ -177,7 +177,7 @@ public class ResultsActivity extends Activity {
                 	createCards("Ýþleminiz yapýlýyor...","Lütfen Bekleyin...",R.drawable.refresh);
                     String addToChartUrl = "http://54.72.214.188:3101/glass/order/"+id+"?token=" + token;
                     id = 0;
-                    remainingTime = 0;
+                    remainingTime = 10;
         			new HttpAsyncTask().execute(addToChartUrl);
                 }
                 else if(canClose){
@@ -214,7 +214,7 @@ public class ResultsActivity extends Activity {
 	                    	createCards("Ýþleminiz yapýlýyor...","Lütfen Bekleyin...",R.drawable.refresh);
 	                        String addToChartUrl = "http://54.72.214.188:3101/glass/order/"+id+"?token=" + token;
 	                        id = 0;
-	                        remainingTime = 0;
+	                        remainingTime = 10;
 	            			new HttpAsyncTask().execute(addToChartUrl);
 	                    }
 	                    return true;
