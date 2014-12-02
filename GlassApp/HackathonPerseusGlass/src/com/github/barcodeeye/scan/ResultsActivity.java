@@ -140,7 +140,7 @@ public class ResultsActivity extends Activity {
     public void removeReceiver() {
         //mEyeGestureManager.unregister(EyeGesture.BLINK, mEyeGestureListener);
         mEyeGestureManager.unregister(EyeGesture.DOUBLE_BLINK, mEyeGestureListener);
-        //mEyeGestureManager.unregister(EyeGesture.WINK, mEyeGestureListener);
+        mEyeGestureManager.unregister(EyeGesture.WINK, mEyeGestureListener);
         //mEyeGestureManager.unregister(EyeGesture.DOUBLE_WINK, mEyeGestureListener);
         //mEyeGestureManager.unregister(EyeGesture.DOFF, mEyeGestureListener);
         try {
@@ -156,7 +156,7 @@ public class ResultsActivity extends Activity {
 
         //mEyeGestureManager.register(EyeGesture.BLINK, mEyeGestureListener);
         mEyeGestureManager.register(EyeGesture.DOUBLE_BLINK, mEyeGestureListener);
-        //mEyeGestureManager.register(EyeGesture.WINK, mEyeGestureListener);
+        mEyeGestureManager.register(EyeGesture.WINK, mEyeGestureListener);
         //mEyeGestureManager.register(EyeGesture.DOUBLE_WINK, mEyeGestureListener);
         //mEyeGestureManager.register(EyeGesture.DOFF, mEyeGestureListener);
     }
@@ -171,7 +171,7 @@ public class ResultsActivity extends Activity {
         public void onDetected(final EyeGesture eyeGesture) {
         	Log.i(TAG, "eyeGesture detected:" + eyeGesture.name());
         	
-        	if(eyeGesture == EyeGesture.DOUBLE_BLINK){
+        	if(eyeGesture == EyeGesture.WINK){
                 if(id != 0){
                 	timerHandler.removeCallbacks(timerRunnable);
                 	createCards("Ýþleminiz yapýlýyor...","Lütfen Bekleyin...",R.drawable.refresh);
@@ -245,12 +245,12 @@ public class ResultsActivity extends Activity {
 					editor.putString(getString(R.string.pair_result_key), token);
 					editor.commit();
 					canClose = true;
-					createCards("Cihazlarýnýzý baþarýlý olarak eþleþtirdiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.success);
+					createCards("Cihazlarýnýzý baþarýlý olarak eþleþtirdiniz.","Çýkýþ için göz kýrpýn, ya da bekleyin",R.drawable.success);
 				}
 				else if(type.equals("product")){
 					if(token == ""){
 						canClose = true;
-						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
+						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için göz kýrpýn, ya da bekleyin",R.drawable.error);
 					}
 					else {
 						product = jObject.getString("name");
@@ -258,28 +258,28 @@ public class ResultsActivity extends Activity {
 						price = jObject.getInt("price");
 						stock = jObject.getInt("stock");
 						remaining = jObject.getInt("remaining");
-						createCards(product + ", " + price + " TL\nStokta kalan: " + remaining + "/" + stock, "\nSepete eklemek için çift göz kýrpýn. Kalan zaman",R.drawable.question);
+						createCards(product + ", " + price + " TL\nStokta kalan: " + remaining + "/" + stock, "\nSepete eklemek için göz kýrpýn. Kalan zaman",R.drawable.question);
 					}
 				}
 				else if(type.equals("order")){
 					if(token == ""){
-						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
+						createCards("Ýþlem baþarýsýz!\nÖnce cihazlarýnýzý eþleþtirmelisiniz.","Çýkýþ için göz kýrpýn, ya da bekleyin",R.drawable.error);
 					}
 					else {
 						boolean success = jObject.getBoolean("success");
 						if(success)
-							createLeftLayoutCards(product + " sepetinize eklendi.","Çýkýþ için çift göz kýrpýn",R.drawable.small_tick);
+							createLeftLayoutCards(product + " sepetinize eklendi.","Çýkýþ için göz kýrpýn",R.drawable.small_tick);
 						else
-							createLeftLayoutCards("Ýþlem baþarýsýz!\n"+product+" sepetinize eklenemedi!","Çýkýþ için çift göz kýrpýn",R.drawable.small_cross);
+							createLeftLayoutCards("Ýþlem baþarýsýz!\n"+product+" sepetinize eklenemedi!","Çýkýþ için göz kýrpýn",R.drawable.small_cross);
 					}
 					canClose = true;
 				}
 				else if(type.equals("server_error")){
-					createCards("Sunucuya eriþilemiyor!\nLütfen Að ayarlarýnýzý kontrol edin.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
+					createCards("Sunucuya eriþilemiyor!\nLütfen Að ayarlarýnýzý kontrol edin.","Çýkýþ için göz kýrpýn, ya da bekleyin",R.drawable.error);
 					canClose = true;
 				}
 				else if(type.equals("server_bad_response")){
-					createCards("404 sayfa bulunamadý!\nSunucu bu isteðe yanýt veremiyor.","Çýkýþ için çift göz kýrpýn, ya da bekleyin",R.drawable.error);
+					createCards("404 sayfa bulunamadý!\nSunucu bu isteðe yanýt veremiyor.","Çýkýþ için göz kýrpýn, ya da bekleyin",R.drawable.error);
 					canClose = true;
 				}
 				timerHandler.postDelayed(timerRunnable, 1000);
